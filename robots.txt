@@ -1,0 +1,46 @@
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+User-agent: Slurp
+Allow: /
+Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+
+User-agent: Sogou
+Allow: /
+Disallow: /api/
+
+User-agent: Exabot
+Allow: /
+Disallow: /api/
+
+User-agent: FacebookExternalHit
+Allow: /
+Disallow: /api/
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /api/
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+
+Sitemap: https://sozda-site.ru/sitemap-index.xml

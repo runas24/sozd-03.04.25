@@ -1,1 +1,452 @@
-f5
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Основные мета-теги -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO и Описание -->
+    <title>AI Конструктор Сайтов SozdaSite: ИИ Создаст Сайт за Вас - Быстро и Без Кода</title>
+    <meta name="description" content="AI Конструктор SozdaSite: Просто опишите вашу идею, и наш Искусственный Интеллект создаст профессиональный сайт за минуты! Адаптивный дизайн, SEO, готовый контент. Попробуйте бесплатно!">
+    <meta name="keywords" content="ai конструктор сайтов, ии конструктор сайтов, создать сайт с ии, сайт с помощью ии, искусственный интеллект сайт, автоматическое создание сайтов, сайт без кода, легкое создание сайтов, быстрый сайт, генератор сайтов ai, sozdasite">
+
+    <!-- Автор и Роботы -->
+    <meta name="author" content="Sozdat Site">
+    <meta name="robots" content="index, follow">
+
+    <!-- Канонический URL -->
+    <link rel="canonical" href="https://sozda-site.ru/">
+
+    <!-- Favicon (Замените на свои файлы!) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#007bff"> <!-- Цвет плитки Windows -->
+    <meta name="theme-color" content="#ffffff"> <!-- Цвет темы для Android Chrome -->
+
+    <!-- Preconnect для шрифтов и CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://unpkg.com">
+
+    <!-- Основной шрифт Lato (оставлен) -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Основные CSS библиотеки -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- Встроенные стили страницы -->
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --font-family: 'Lato', sans-serif; /* Используем Lato */
+            --icon-color-1: #ff6b6b;
+            --icon-color-2: #feca57;
+            --icon-color-3: #48dbfb;
+            --icon-color-4: #1dd1a1;
+            --icon-color-5: #ff9ff3;
+            --icon-color-6: #54a0ff;
+        }
+        body{font-family:var(--font-family);line-height:1.6;color:var(--dark-color);overflow-x:hidden}
+        h1,h2,h3,h4,h5,h6{font-weight:700;color:var(--dark-color)}
+        .btn-primary{background-color:var(--primary-color);border-color:var(--primary-color);transition:background-color .3s ease,border-color .3s ease}
+        .btn-primary:hover{background-color:#0056b3;border-color:#0056b3}
+        .section-padding{padding:80px 0}
+        .navbar{transition:background-color .3s ease}
+        .navbar-brand{font-weight:700;font-size:1.5rem}
+        .navbar.scrolled{background-color:rgba(255,255,255,.9);box-shadow:0 2px 4px rgba(0,0,0,.1)}
+        #hero{background:linear-gradient(135deg,rgba(0,123,255,.05),rgba(108,117,125,.05));position:relative;overflow:hidden;min-height:90vh;display:flex;align-items:center}
+        #particles-js{position:absolute;width:100%;height:100%;top:0;left:0;z-index:0}
+        #hero .container{position:relative;z-index:1}
+        #hero h1{font-size:2.8rem;font-weight:700;margin-bottom:1rem}
+        #hero .lead{font-size:1.2rem;margin-bottom:2rem}
+        #hero .typed-text{color:var(--primary-color);font-weight:700}
+        .hero-svg-container{display:flex;justify-content:center;align-items:center;height:100%}
+        .hero-svg{max-width:100%;height:auto;filter:drop-shadow(3px 5px 5px rgba(0,0,0,.1))}
+        .svg-browser-stroke{stroke:#adb5bd;stroke-width:4}
+        .svg-browser-fill{fill:#e9ecef}
+        .svg-content-area{fill:#fff;stroke:#dee2e6;stroke-width:2}
+        .svg-circle-red{fill:#dc3545}
+        .svg-circle-yellow{fill:#ffc107}
+        .svg-circle-green{fill:#28a745}
+        .svg-block-primary{fill:var(--primary-color);opacity:.8}
+        .svg-block-secondary{fill:var(--secondary-color);opacity:.7}
+        .svg-block-light{fill:#ced4da;opacity:.9}
+        #features .card{border:none;box-shadow:0 4px 15px rgba(0,0,0,.08);transition:transform .3s ease,box-shadow .3s ease}
+        #features .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+        #features .feature-icon {width: 70px; height: 70px; margin-left: auto; margin-right: auto; margin-bottom: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; transition: background-color 0.3s ease;}
+        .icon-color-1 { color: var(--icon-color-1); } .icon-color-2 { color: var(--icon-color-2); } .icon-color-3 { color: var(--icon-color-3); } .icon-color-4 { color: var(--icon-color-4); } .icon-color-5 { color: var(--icon-color-5); } .icon-color-6 { color: var(--icon-color-6); }
+        .icon-bg-1 { background-color: rgba(255, 107, 107, 0.15); } .icon-bg-2 { background-color: rgba(254, 202, 87, 0.15); } .icon-bg-3 { background-color: rgba(72, 219, 251, 0.15); } .icon-bg-4 { background-color: rgba(29, 209, 161, 0.15); } .icon-bg-5 { background-color: rgba(255, 159, 243, 0.15); } .icon-bg-6 { background-color: rgba(84, 160, 255, 0.15); }
+        #features .card:hover .feature-icon { background-color: rgba(0, 123, 255, 0.2); }
+        #how-it-works{background-color:var(--light-color)}
+        .step-number{display:inline-block;width:40px;height:40px;line-height:40px;border-radius:50%;background-color:var(--primary-color);color:#fff;font-weight:700;text-align:center;margin-right:15px}
+        #testimonials{background:linear-gradient(135deg,rgba(0,123,255,.05),rgba(108,117,125,.05))}
+        .swiper-slide{background:#fff;border-radius:8px;padding:30px;box-shadow:0 4px 15px rgba(0,0,0,.05);text-align:center}
+        .testimonial-quote{font-style:italic;color:#555;margin-bottom:1rem}
+        .testimonial-author{font-weight:700;color:var(--primary-color)}
+        .swiper-pagination-bullet-active{background-color:var(--primary-color)!important}
+        .swiper-button-next,.swiper-button-prev{color:var(--primary-color)!important}
+        #cta{background-color:var(--primary-color);color:#fff}
+        #cta h2{color:#fff}
+        #cta .btn-light{font-weight:700}
+        footer{background-color:var(--dark-color);color:var(--light-color);padding:30px 0}
+        footer p{margin-bottom:0;color:rgba(255,255,255,.7)}
+        footer a{color:var(--primary-color);text-decoration:none;transition:color .3s ease}
+        footer a:hover{color:#fff}
+        .rellax{}
+        @media(max-width:768px){
+            #hero h1{font-size:2.2rem}
+            #hero .lead{font-size:1rem}
+            .hero-svg-container{margin-top:30px}
+            .section-padding{padding:60px 0}
+            #features .feature-icon { width: 60px; height: 60px; font-size: 2rem; }
+        }
+    </style>
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Создать сайт для начинающих легко в 2024\n", // Обратите внимание: Это отличается от <title> страницы
+      "description": "Хочу создать сайт в 2025 быстро\n", // Обратите внимание: Это отличается от <meta name="description"> страницы
+      "url": "https://sozda-site.ru/",
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Sozdat Site"
+      },
+      "mainEntity": {
+        "@type": "WebSite",
+        "url": "https://sozda-site.ru",
+        "name": "Создать сайт для начинающих легко в 2024" // Обратите внимание: Это отличается от <title> страницы
+      }
+    }
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(98547214, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/98547214" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><i class="fas fa-robot me-2 text-primary"></i>SozdaSite AI</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#hero">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#features">AI Возможности</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#how-it-works">Как AI Работает</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#testimonials">Отзывы</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary text-white ms-lg-2 px-3" href="https://ai.craftum.com/?id=633096&ref=main" target="_blank" rel="noopener noreferrer">Создать Сайт с AI</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="hero" class="section-padding">
+            <div id="particles-js"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0" data-aos="fade-right">
+                        <h1 class="animate__animated animate__fadeInDown">Искусственный Интеллект Создаст Ваш Сайт <span class="typed-text"></span></h1>
+                        <p class="lead animate__animated animate__fadeInUp animate__delay-1s">Забудьте о сложностях! Просто опишите свой бизнес или идею, и наш AI-ассистент мгновенно сгенерирует для вас уникальный, профессиональный сайт. Никакого кода, никаких усилий.</p>
+                        <a href="https://ai.craftum.com/?id=633096&ref=main" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg animate__animated animate__fadeIn animate__delay-1s" data-aos="zoom-in" data-aos-delay="500">Создать Сайт с Помощью AI</a>
+                        <p class="mt-3 text-muted" data-aos="fade-up" data-aos-delay="700"><small>Попробуйте AI бесплатно 10 дней</small></p>
+                    </div>
+                    <div class="col-lg-6 hero-svg-container" data-aos="fade-left" data-aos-delay="300">
+                        <div class="rellax" data-rellax-speed="-1">
+                           <svg class="hero-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgb(0,123,255);stop-opacity:.2" /><stop offset="100%" style="stop-color:rgb(108,117,125);stop-opacity:.2" /></linearGradient></defs>
+                                <rect x="10" y="10" rx="10" ry="10" width="380" height="280" fill="url(#grad1)" class="svg-browser-fill" />
+                                <rect x="10" y="10" rx="10" ry="10" width="380" height="40" class="svg-browser-stroke" fill="#d1d8e0"/>
+                                <circle cx="35" cy="30" r="7" class="svg-circle-red"/>
+                                <circle cx="60" cy="30" r="7" class="svg-circle-yellow"/>
+                                <circle cx="85" cy="30" r="7" class="svg-circle-green"/>
+                                <rect x="20" y="60" width="360" height="220" class="svg-content-area"/>
+                                <rect x="50" y="90" width="120" height="40" class="svg-block-primary" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="500"/>
+                                <rect x="200" y="95" width="150" height="30" class="svg-block-light" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="600"/>
+                                <rect x="50" y="150" width="80" height="80" class="svg-block-secondary" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="700"/>
+                                <rect x="150" y="150" width="200" height="25" class="svg-block-light" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="800"/>
+                                <rect x="150" y="190" width="200" height="25" class="svg-block-light" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="900"/>
+                                <rect x="150" y="230" width="150" height="25" class="svg-block-primary" rx="5" ry="5" data-aos="zoom-in" data-aos-delay="1000"/>
+                            </svg>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-padding">
+            <div class="container">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h2>Как AI Делает Создание Сайта Простым</h2>
+                    <p class="lead">Искусственный интеллект берет всю сложную работу на себя.</p>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card h-100 p-4">
+                             <div class="feature-icon icon-bg-1"> <i class="fas fa-magic icon-color-1"></i> </div>
+                             <h3 class="h5">Мгновенная Генерация Сайта</h3>
+                             <p>AI анализирует ваше описание и моментально создает структуру, дизайн и даже начальный контент сайта.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                         <div class="card h-100 p-4">
+                            <div class="feature-icon icon-bg-2"> <i class="fas fa-mobile-alt icon-color-2"></i> </div>
+                            <h3 class="h5">AI-Адаптивный Дизайн</h3>
+                            <p>Искусственный интеллект автоматически гарантирует, что ваш сайт будет идеально отображаться на любых устройствах.</p>
+                         </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                         <div class="card h-100 p-4">
+                            <div class="feature-icon icon-bg-3"> <i class="fas fa-palette icon-color-3"></i> </div>
+                            <h3 class="h5">Уникальный AI-Дизайн</h3>
+                             <p>Вместо шаблонов, AI создает персонализированный дизайн, основанный на ваших целях и тематике.</p>
+                         </div>
+                    </div>
+                     <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                         <div class="card h-100 p-4">
+                            <div class="feature-icon icon-bg-4"> <i class="fas fa-rocket icon-color-4"></i> </div>
+                            <h3 class="h5">AI-Оптимизация Скорости</h3>
+                             <p>Наш AI пишет чистый, эффективный код, обеспечивая молниеносную загрузку вашего сайта.</p>
+                         </div>
+                    </div>
+                     <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+                         <div class="card h-100 p-4">
+                            <div class="feature-icon icon-bg-5"> <i class="fas fa-search-dollar icon-color-5"></i> </div>
+                             <h3 class="h5">Базовое AI-SEO</h3>
+                             <p>ИИ автоматически применяет основные SEO-практики для лучшей видимости в поиске с самого старта.</p>
+                         </div>
+                    </div>
+                     <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="600">
+                         <div class="card h-100 p-4">
+                            <div class="feature-icon icon-bg-6"> <i class="fas fa-edit icon-color-6"></i> </div>
+                             <h3 class="h5">Легкое Редактирование</h3>
+                             <p>AI создает основу, а вы можете легко внести финальные штрихи или обновить информацию в простом редакторе.</p>
+                         </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4" data-aos="fade-up">
+                    <p>Готовы увидеть магию AI? <a href="https://ai.craftum.com/?id=633096&ref=main" target="_blank" rel="noopener noreferrer">Пусть AI создаст ваш сайт бесплатно!</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="section-padding">
+            <div class="container">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h2>Как AI Создает Ваш Сайт? Проще Не Бывает!</h2>
+                    <p class="lead">Всего несколько шагов до готового сайта.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-md-10" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mb-4 d-flex align-items-start"><span class="step-number flex-shrink-0">1</span>
+                            <div>
+                                <h4>Опишите Вашу Идею</h4>
+                                <p>Расскажите нашему AI о вашем бизнесе, стиле, целях или просто дайте ссылку на старый сайт.</p>
+                            </div>
+                        </div>
+                        <div class="mb-4 d-flex align-items-start"><span class="step-number flex-shrink-0">2</span>
+                            <div>
+                                <h4>AI Генерирует Сайт</h4>
+                                <p>Наблюдайте, как искусственный интеллект создает уникальный дизайн, подбирает изображения и пишет тексты за секунды.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4"><span class="step-number flex-shrink-0">3</span>
+                            <div>
+                                <h4>Опубликуйте Результат</h4>
+                                <p>Довольны сгенерированным сайтом? Можете внести мелкие правки или сразу опубликовать его одним кликом!</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-5">
+                             <a href="https://ai.craftum.com/?id=633096&ref=main" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Поручить Создание Сайта AI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="testimonials" class="section-padding">
+            <div class="container" data-aos="fade-up">
+                <div class="text-center mb-5">
+                    <h2>Что говорят наши клиенты об AI</h2>
+                </div>
+                <div class="swiper testimonials-slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <p class="testimonial-quote">"Я просто написал пару предложений о своей кофейне, и AI сделал потрясающий сайт! Не верится, что это так просто и быстро."</p>
+                            <p class="testimonial-author">- Сергей К., Владелец кофейни</p>
+                        </div>
+                         <div class="swiper-slide">
+                            <p class="testimonial-quote">"Никогда не думал, что сайт можно не 'делать', а 'сгенерировать'. AI SozdaSite сэкономил мне кучу времени и денег!"</p>
+                            <p class="testimonial-author">- Алексей П., Малый бизнес</p>
+                        </div>
+                        <div class="swiper-slide">
+                            <p class="testimonial-quote">"AI подобрал отличные картинки и тексты для моего портфолио. Осталось только немного подправить под себя. Супер!"</p>
+                            <p class="testimonial-author">- Ирина В., Фрилансер</p>
+                        </div>
+                        <div class="swiper-slide">
+                            <p class="testimonial-quote">"Перепробовала несколько конструкторов, но с AI - это совсем другой уровень. Никаких шаблонов, все уникально!"</p>
+                            <p class="testimonial-author">- Ольга С., Блогер</p>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="section-padding text-center">
+            <div class="container" data-aos="zoom-in">
+                <h2 class="mb-4">Позвольте AI Создать Ваш Идеальный Сайт Прямо Сейчас!</h2>
+                <p class="lead mb-4">Освободите свое время и получите профессиональный результат без усилий.</p>
+                <a href="https://ai.craftum.com/?id=633096&ref=main" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-lg px-5">Запустить AI-Генератор Сайта</a>
+                 <p class="mt-3 mb-0"><small>Без риска - 10 дней бесплатно</small></p>
+            </div>
+        </section>
+    </main>
+    <footer class="text-center">
+        <div class="container">
+            <p>© <span id="current-year"></span> SozdaSite AI. Все права защищены.</p>
+            <p>Создано с <i class="fas fa-heart text-danger"></i> с помощью AI и современных технологий.</p>
+        </div>
+    </footer>
+
+    <!-- Скрипты JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js" integrity="sha512-f5HTYZYTDZelxS7LEQYv8ppMHTZ6JJWglzeQmr0CVTS70vJga39SujcekGDjdZrUZydhqMzoRKfloCvQXFI0oA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js" integrity="sha512-FwNWaxyfyV+trGFnV9tfGWwiOSZHpkUCLDEUMIflMFM/HizthkFO36mmhY/tvAb2fIgNfsAuW98wUv7fyU/q4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({ duration: 800, once: true });
+
+            if (document.querySelector('.typed-text')) {
+                new Typed('.typed-text', {
+                    strings: ["за минуты!", "автоматически!", "идеально для вас!", "без усилий!"],
+                    typeSpeed: 70,
+                    backSpeed: 50,
+                    loop: true,
+                    backDelay: 1800
+                });
+            }
+
+            new Swiper('.testimonials-slider', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: { delay: 5500, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                breakpoints: {
+                    768: { slidesPerView: 2, spaceBetween: 40 },
+                    992: { slidesPerView: 3, spaceBetween: 50 }
+                }
+            });
+
+            if (document.querySelector('.rellax')) {
+                if (window.innerWidth > 768) {
+                     new Rellax('.rellax');
+                }
+            }
+
+            if (document.getElementById('particles-js')) {
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                        "color": { "value": "#007bff" },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.4, "random": false },
+                        "size": { "value": 3, "random": true },
+                        "line_linked": { "enable": true, "distance": 150, "color": "#adb5bd", "opacity": 0.3, "width": 1 },
+                        "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false, "mode": "push" }, "resize": true },
+                        "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.8 } } }
+                    },
+                    "retina_detect": true
+                 });
+            }
+
+            if (document.getElementById('current-year') && typeof dayjs === 'function') {
+                document.getElementById('current-year').textContent = dayjs().format('YYYY');
+            }
+
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.closest('.navbar-collapse')) {
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show') && !this.classList.contains('dropdown-toggle')) {
+                             new bootstrap.Collapse(navbarCollapse, {toggle: false}).hide();
+                        }
+                    }
+                    if (this.getAttribute('href') === '#') {
+                       return;
+                    }
+                    if (this.getAttribute('href').startsWith('#') && this.getAttribute('href').length > 1) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
