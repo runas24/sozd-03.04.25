@@ -395,16 +395,62 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js" integrity="sha512-FwNWaxyfyV+trGFnV9tfGWwiOSZHpkUCLDEUMIflMFM/HizthkFO36mmhY/tvAb2fIgNfsAuW98wUv7fyU/q4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Скрипт логики Turnstile и инициализации сайта -->
+    // Скрипт логики Turnstile и инициализации сайта
     <script>
         // URL вашего развернутого Google Apps Script
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNoF5VDi-e1ywpUabXP9geJcxC2r2jPl6psqa5NefL5MiDAIMKW-qVh5ZsT3zPmenN/exec'; // <-- ЗАМЕНИТЕ ЭТО!
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNoF5VDi-e1ywpUabXP9geJcxC2r2jPl6psqa5NefL5MiDAIMKW-qVh5ZsT3zPmenN/exec'; // <-- УБЕДИТЕСЬ, ЧТО URL ПРАВИЛЬНЫЙ
+
+        // Ключ для sessionStorage
+        const VERIFICATION_KEY = 'turnstileVerifiedSession';
 
         // ID виджета для сброса
         let turnstileWidgetId;
 
+        // --- ПРОВЕРКА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ---
+        (function checkSessionVerification() {
+            const isVerified = sessionStorage.getItem(VERIFICATION_KEY);
+            const challengeContainer = document.getElementById('turnstile-challenge');
+            const mainContent = document.getElementById('main-content');
+
+            if (isVerified === 'true') {
+                console.log('User already verified in this session. Skipping CAPTCHA.');
+                // Сразу показываем контент и скрываем капчу
+                if (challengeContainer) challengeContainer.style.display = 'none';
+                if (mainContent) mainContent.style.display = 'block';
+
+                // Инициализируем скрипты сайта НЕМЕДЛЕННО
+                // Используем setTimeout 0 для гарантии, что DOM готов, хотя обычно block уже делает это
+                setTimeout(initializeSiteScripts, 0);
+
+                 // Инициализируем Яндекс Метрику, если она нужна сразу
+                 if (typeof ym === 'function') {
+                    ym(98547214, "init", {
+                         clickmap:true,
+                         trackLinks:true,
+                         accurateTrackBounce:true
+                    });
+                    console.log('Yandex Metrika initialized (session verified).');
+                 }
+
+            } else {
+                console.log('User not verified in this session. Showing CAPTCHA.');
+                // Если не верифицирован, убедимся, что контент скрыт, а капча видна
+                // (Хотя это и так по умолчанию, но для надежности)
+                 if (challengeContainer) challengeContainer.style.display = 'flex'; // Используем flex как в CSS
+                 if (mainContent) mainContent.style.display = 'none';
+                // Функция renderTurnstile будет вызвана автоматически через onload API
+            }
+        })(); // Самовызывающаяся функция для немедленной проверки
+
+
         // Функция, вызываемая после загрузки API Turnstile
         function renderTurnstile() {
+             // Добавим проверку и здесь, на всякий случай, если API загрузится раньше DOMContentLoaded
+             if (sessionStorage.getItem(VERIFICATION_KEY) === 'true') {
+                 console.log('renderTurnstile called, but verification flag already set.');
+                 return; // Не рендерим, если уже верифицирован
+             }
+
             if (typeof turnstile !== 'undefined') {
                  turnstileWidgetId = turnstile.render('#turnstile-widget-container', {
                     sitekey: '0x4AAAAAABFTYmYH6mOkyiSe', // Ваш Site Key
@@ -416,6 +462,8 @@
                         console.error('Turnstile Challenge Failed');
                         const errorElement = document.getElementById('turnstile-error');
                         if(errorElement) errorElement.textContent = 'Ошибка проверки. Пожалуйста, обновите страницу и попробуйте снова.';
+                         // Очищаем флаг при ошибке, чтобы капча появилась снова при обновлении
+                         sessionStorage.removeItem(VERIFICATION_KEY);
                     },
                     'expired-callback': function() {
                          console.warn('Turnstile Token Expired');
@@ -424,6 +472,8 @@
                          if (turnstileWidgetId) {
                             turnstile.reset(turnstileWidgetId);
                          }
+                         // Очищаем флаг при истечении срока
+                         sessionStorage.removeItem(VERIFICATION_KEY);
                     },
                      theme: 'light', // или 'dark' / 'auto'
                 });
@@ -448,27 +498,24 @@
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
-                         // Важно для GAS doPost: Content-Type обычно не нужен,
-                         // GAS сам парсит параметры из form-data или URL-encoded.
-                         // Если отправляете JSON:
-                         // 'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded', // Можно добавить для ясности, но fetch с URLSearchParams делает это
                     },
-                    // GAS doPost ожидает данные как параметры, fetch по умолчанию
-                    // отправляет как form-data при использовании FormData
-                    // или как URL-encoded строку при объекте в body без JSON.stringify
-                    // Проще всего передать как параметр:
                     body: new URLSearchParams({ 'cf-turnstile-response': token })
                 });
 
                 if (!response.ok) {
-                     // Ошибка сети или серверная ошибка GAS (5xx)
                      throw new Error(`Ошибка сервера Apps Script: ${response.status} ${response.statusText}`);
                 }
 
-                const result = await response.json(); // Ожидаем JSON от GAS
+                const result = await response.json();
 
                 if (result.success) {
                     console.log("Verification successful via Apps Script.");
+
+                    // *** УСТАНАВЛИВАЕМ ФЛАГ В sessionStorage ПЕРЕД ПОКАЗОМ КОНТЕНТА ***
+                    sessionStorage.setItem(VERIFICATION_KEY, 'true');
+                    console.log('Session verification flag set.');
+
                     // Успех! Скрываем блок капчи, показываем контент, инициализируем скрипты
                     if(challengeContainer) challengeContainer.style.display = 'none';
                     const mainContent = document.getElementById('main-content');
@@ -495,55 +542,67 @@
                         turnstile.reset(turnstileWidgetId);
                      }
                      if(messageElement) messageElement.textContent = 'Пожалуйста, пройдите проверку еще раз.';
+                     // Убедимся, что флаг сброшен при неудачной проверке
+                     sessionStorage.removeItem(VERIFICATION_KEY);
                 }
 
             } catch (error) {
                 console.error('Error during fetch to Apps Script:', error);
                 if(errorElement) errorElement.textContent = 'Не удалось связаться с сервером проверки. Попробуйте обновить страницу.';
-                 // Можно сбросить виджет, чтобы пользователь попробовал снова
                  if (turnstileWidgetId) {
                      turnstile.reset(turnstileWidgetId);
                  }
                  if(messageElement) messageElement.textContent = 'Пожалуйста, пройдите проверку безопасности...';
+                 // Убедимся, что флаг сброшен при ошибке связи
+                 sessionStorage.removeItem(VERIFICATION_KEY);
             }
         }
 
-        // Функция инициализации скриптов сайта
+        // Функция инициализации скриптов сайта (остается без изменений)
         function initializeSiteScripts() {
+            // ... (ваш код инициализации AOS, Typed, Swiper, Rellax, particles, dayjs, navbar, smooth scroll)
             console.log('Initializing site scripts...');
             try {
                 AOS.init({ duration: 800, once: true });
 
                 if (document.querySelector('.typed-text')) {
-                    new Typed('.typed-text', {
-                        strings: ["за минуты!", "автоматически!", "идеально для вас!", "без усилий!"],
-                        typeSpeed: 70,
-                        backSpeed: 50,
-                        loop: true,
-                        backDelay: 1800
+                    // Проверяем, существует ли уже экземпляр Typed, чтобы избежать дублирования
+                    if (!document.querySelector('.typed-text')._typed) {
+                        document.querySelector('.typed-text')._typed = new Typed('.typed-text', {
+                            strings: ["за минуты!", "автоматически!", "идеально для вас!", "без усилий!"],
+                            typeSpeed: 70,
+                            backSpeed: 50,
+                            loop: true,
+                            backDelay: 1800
+                        });
+                    }
+                }
+
+                // Проверяем, не инициализирован ли Swiper уже
+                if (document.querySelector('.testimonials-slider') && !document.querySelector('.testimonials-slider').swiper) {
+                    new Swiper('.testimonials-slider', {
+                       slidesPerView: 1,
+                       spaceBetween: 30,
+                       loop: true,
+                       autoplay: { delay: 5500, disableOnInteraction: false },
+                       pagination: { el: '.swiper-pagination', clickable: true },
+                       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                       breakpoints: {
+                           768: { slidesPerView: 2, spaceBetween: 40 },
+                           992: { slidesPerView: 3, spaceBetween: 50 }
+                       }
                     });
                 }
 
-                new Swiper('.testimonials-slider', {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
-                    loop: true,
-                    autoplay: { delay: 5500, disableOnInteraction: false },
-                    pagination: { el: '.swiper-pagination', clickable: true },
-                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                    breakpoints: {
-                        768: { slidesPerView: 2, spaceBetween: 40 },
-                        992: { slidesPerView: 3, spaceBetween: 50 }
-                    }
-                });
+                // Инициализация Rellax только если он еще не создан
+                 if (document.querySelector('.rellax') && typeof Rellax !== 'undefined' && !document.querySelector('.rellax').rellaxInstance) {
+                     if (window.innerWidth > 768) {
+                          document.querySelector('.rellax').rellaxInstance = new Rellax('.rellax');
+                     }
+                 }
 
-                if (document.querySelector('.rellax')) {
-                    if (window.innerWidth > 768) {
-                         new Rellax('.rellax');
-                    }
-                }
 
-                if (document.getElementById('particles-js')) {
+                if (document.getElementById('particles-js') && typeof particlesJS !== 'undefined' && !window.pJSDom) { // particles.js создает pJSDom
                     particlesJS("particles-js", { /* ... ваш конфиг particlesJS ... */
                        "particles": {
                             "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
@@ -567,56 +626,63 @@
                     document.getElementById('current-year').textContent = dayjs().format('YYYY');
                 }
 
+                // Код для Navbar и Smooth Scroll можно оставить как есть,
+                // они обычно не вызывают проблем при повторной инициализации,
+                // но можно добавить флаги, если нужно строже.
                 const navbar = document.querySelector('.navbar');
                 if (navbar) {
-                    // Устанавливаем начальное состояние навбара
-                    if (window.scrollY > 50) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                    // Добавляем слушатель скролла
-                    window.addEventListener('scroll', () => {
-                        if (window.scrollY > 50) {
-                            navbar.classList.add('scrolled');
-                        } else {
-                            navbar.classList.remove('scrolled');
-                        }
-                    });
-                }
+                     let isNavbarListenerAttached = navbar.dataset.scrollListenerAttached === 'true';
+                     if (!isNavbarListenerAttached) {
+                         const scrollHandler = () => {
+                             if (window.scrollY > 50) {
+                                 navbar.classList.add('scrolled');
+                             } else {
+                                 navbar.classList.remove('scrolled');
+                             }
+                         };
+                         // Устанавливаем начальное состояние
+                         scrollHandler();
+                         // Добавляем слушатель
+                         window.addEventListener('scroll', scrollHandler);
+                         navbar.dataset.scrollListenerAttached = 'true'; // Ставим флаг
+                     }
+                 }
 
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        if (this.closest('.navbar-collapse')) {
-                            const navbarCollapse = document.querySelector('.navbar-collapse');
-                            if (navbarCollapse.classList.contains('show') && !this.classList.contains('dropdown-toggle')) {
-                                 new bootstrap.Collapse(navbarCollapse, {toggle: false}).hide();
-                            }
-                        }
-                        if (this.getAttribute('href') === '#') {
-                           return;
-                        }
-                        if (this.getAttribute('href').startsWith('#') && this.getAttribute('href').length > 1) {
-                            e.preventDefault();
-                            const targetId = this.getAttribute('href');
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                                const elementPosition = targetElement.getBoundingClientRect().top;
-                                const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-                                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                            }
-                        }
-                    });
-                });
+                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                      let isSmoothScrollAttached = anchor.dataset.smoothScrollAttached === 'true';
+                      if (!isSmoothScrollAttached) {
+                          anchor.addEventListener('click', function(e) {
+                              // ... (ваш код smooth scroll) ...
+                                if (this.closest('.navbar-collapse')) {
+                                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                                    if (navbarCollapse.classList.contains('show') && !this.classList.contains('dropdown-toggle')) {
+                                         new bootstrap.Collapse(navbarCollapse, {toggle: false}).hide();
+                                    }
+                                }
+                                if (this.getAttribute('href') === '#') {
+                                   return;
+                                }
+                                if (this.getAttribute('href').startsWith('#') && this.getAttribute('href').length > 1) {
+                                    e.preventDefault();
+                                    const targetId = this.getAttribute('href');
+                                    const targetElement = document.querySelector(targetId);
+                                    if (targetElement) {
+                                        const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0; // Добавил ? и || 0
+                                        const elementPosition = targetElement.getBoundingClientRect().top;
+                                        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                                    }
+                                }
+                          });
+                          anchor.dataset.smoothScrollAttached = 'true'; // Ставим флаг
+                      }
+                  });
+
                  console.log('Site scripts initialized successfully.');
             } catch (error) {
                 console.error("Error initializing site scripts:", error);
             }
         }
-
-       // document.addEventListener('DOMContentLoaded'...) не нужен,
-       // т.к. инициализация скриптов теперь вызывается явно функцией initializeSiteScripts()
 
     </script>
 
